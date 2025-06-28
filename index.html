@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Média</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Jogo da Média</h1>
+  
+  <p>Digite a quantidade de números:</p>
+  <input type="number" id="quantidade" min="1" placeholder="Ex.: 5">
+  <button onclick="criarCampos()">Começar</button>
+
+  <div id="numeros"></div>
+  <div id="resultado"></div>
+
+  <script>
+    function criarCampos() {
+      const qtd = document.getElementById("quantidade").value;
+      const numerosDiv = document.getElementById("numeros");
+      numerosDiv.innerHTML = "";
+
+      if (qtd <= 0) {
+        alert("Por favor, digite um número maior que zero.");
+        return;
+      }
+
+      for (let i = 0; i < qtd; i++) {
+        const input = document.createElement("input");
+        input.type = "number";
+        input.placeholder = `Número ${i+1}`;
+        numerosDiv.appendChild(input);
+        numerosDiv.appendChild(document.createElement("br"));
+      }
+
+      const btn = document.createElement("button");
+      btn.innerText = "Calcular Média";
+      btn.onclick = calcularMedia;
+      numerosDiv.appendChild(btn);
+    }
+
+    function calcularMedia() {
+      const inputs = document.querySelectorAll("#numeros input");
+      let soma = 0;
+      let quantidade = inputs.length;
+
+      for (let input of inputs) {
+        const valor = parseFloat(input.value);
+        if (isNaN(valor)) {
+          alert("Por favor, preencha todos os números corretamente.");
+          return;
+        }
+        soma += valor;
+      }
+
+      const media = soma / quantidade;
+      document.getElementById("resultado").innerHTML = `<h2>Média: ${media.toFixed(2)}</h2>`;
+    }
+  </script>
+
+</body>
+</html>
